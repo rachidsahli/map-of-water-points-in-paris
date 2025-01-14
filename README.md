@@ -6,7 +6,7 @@ L'objectif est de fournir une visualisation géographique des points d'eau à Pa
 
 ## Structure du Projet
  - main.R : Contient le code R qui charge les données, les traite, et génère la carte interactive.
-- water_data.csv : Fichier de données contenant les informations sur les points d'eau, tel que leur localisation géographique, leur type, etc.
+- water_data : Dossier de données contenant les données sur les points d'eau, tel que leur localisation géographique, leur type, etc.
 
 ## Prérequis
 R (version 4.0 ou plus récente recommandée)
