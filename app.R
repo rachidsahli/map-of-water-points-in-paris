@@ -16,7 +16,6 @@ ui <- page_navbar(
   id = "page",
   lang = "fr",
   footer = div(p("© 2025 Fontaines de Paris - Tous droits réservés"), style = "text-align: center;"),
-  bg = "#0A8EDB",
   
   layout_sidebar(
     sidebar = sidebar(
@@ -24,6 +23,13 @@ ui <- page_navbar(
       
       selectInput("Lieu_filtre", "Choisissez un lieu", 
                   choices = c("Tous", unique(eau$Nom_df)), selected = "Tous"),
+      
+      selectInput("fond_carte", "Fond de carte", 
+                  choices = c("Classique", "Satellite", "Nocturne"), 
+                  selected = "Classique"),
+
+      actionButton("recentrer", "Recentrer sur Paris")
+      
     ),
     
     div(
@@ -68,6 +74,24 @@ server <- function(input, output) {
   # Activation boutons quitter
   observeEvent(input$quit_button, {
     stopApp()  
+  })
+  
+  # Changement fond carte
+  observe({
+    fond <- switch(input$fond_carte,
+                   "Classique" = providers$OpenStreetMap,
+                   "Satellite" = providers$Esri.WorldImagery,
+                   "Nocturne" = providers$CartoDB.DarkMatter)
+    
+    leafletProxy("carte") %>%
+      clearTiles() %>%
+      addProviderTiles(fond)
+  })
+  
+  # Recentrer sur Paris
+  observeEvent(input$recentrer, {
+    leafletProxy("carte") %>%
+      setView(lng = 2.3522, lat = 48.8566, zoom = 12)
   })
   
   # Filtre lieu
