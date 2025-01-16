@@ -1,74 +1,73 @@
-# Import library --------------- 
+# Import library ---------------
+
 library(shiny) # Application
 library(bslib) # Application
 library(htmltools) # Manipulation de contenu html
 library(dplyr) # Manipulation de données
 library(leaflet) # Carte
 library(leaflet.extras) # Carte
+library(rsconnect) # Déploiement de l'application
+library(tidyr) # Manipulation de données
 
-# Import data --------------- 
-# eau <- read.csv("eau.csv")  # Décommentez cette ligne pour charger vos données.
+# Import data ---------------
+
+eau <- read.csv("eau.csv")
 
 # UI --------------- 
-ui <- page_navbar(
+
+ui <- page_sidebar(
+  
   theme = bs_theme(bootswatch = "yeti"),
   title = "Fontaines de Paris",  
   id = "page",
   lang = "fr",
-  footer = div(p("© 2025 Fontaines de Paris - Tous droits réservés"), style = "text-align: center;"),
   
-  layout_sidebar(
-    sidebar = sidebar(
-      title = "Menu",
-      
-      selectInput("Lieu_filtre", "Choisissez un lieu", 
-                  choices = c("Tous", unique(eau$Nom_df)), selected = "Tous"),
-      
-      selectInput("fond_carte", "Fond de carte", 
-                  choices = c("Classique", "Satellite", "Nocturne"), 
-                  selected = "Classique"),
-
-      actionButton("recentrer", "Recentrer sur Paris")
-      
-    ),
+  sidebar = sidebar(
+    title = "Menu",
     
+    input_dark_mode(),
+    
+    selectInput("Lieu_filtre", "Choisissez un lieu", 
+                choices = c("Tous", unique(eau$Nom_df)), selected = "Tous"),
+    
+    selectInput("fond_carte", "Fond de carte", 
+                choices = c("Classique", "Satellite", "Nocturne"), 
+                selected = "Classique"),
+    
+    actionButton("recentrer", "Recentrer sur Paris"),
+    
+    actionButton("quit_button", "Quitter", icon = icon("sign-out-alt"), class = "btn-danger"),
+    
+    
+  ),
+  
+  div(
+    style = "padding: 10px; text-align: center;",
+    h2("Où boire de l'eau à Paris ?"),
+    h5("Paris regorge de fontaines publiques où vous pouvez vous désaltérer gratuitement. Cette carte interactive vous permet de localiser les fontaines et de découvrir où elles se trouvent dans la ville. Explorez les différents types de fontaines et leur accessibilité pour vous rafraîchir pendant vos promenades.")
+  ),
+  
+  # Carte
+  card(
+    full_screen = TRUE,
     div(
-      style = "padding: 10px; text-align: center;",
-      h4("Où boire de l'eau à Paris ?"),
-      p("Paris regorge de fontaines publiques où vous pouvez vous désaltérer gratuitement. Cette carte interactive vous permet de localiser les fontaines et de découvrir où elles se trouvent dans la ville. Explorez les différents types de fontaines et leur accessibilité pour vous rafraîchir pendant vos promenades.")
+      style = "position: relative; height: 100%;",  
+      leafletOutput("carte", width = "100%", height = "100%")
     ),
-    
-    card(
-      full_screen = TRUE,
-      div(
-        style = "position: relative; height: 100%;",  
-        leafletOutput("carte", width = "100%", height = "100%")
-      ),
-      card_footer(
-        popover(
-          a("Learn more", href = "#"),
-          markdown("")
-        )
+    card_footer(
+      popover(
+        a("En savoir plus"),
+        markdown("Cette carte a été réalisée à partir des données disponibles sur le site [data.gouv.fr](https://www.data.gouv.fr/fr/). 
+        Les points d'eau indiqués peuvent avoir évolué, notamment en ce qui concerne les îlots et équipements verts, dont certains ont été installés spécifiquement pour les Jeux Olympiques de 2024.
+")
       )
     )
-  ),
-  
-  nav_spacer(),
-  nav_item(
-    a(shiny::icon("github"), "", href = "https://github.com/rachidsahli", target = "_blank", class = "me-3")
-  ),
-  nav_item(
-    a(shiny::icon("linkedin"), "", href = "https://www.linkedin.com/in/rachidsahli/", target = "_blank", class = "me-3")
-  ),
-  nav_item(
-    input_dark_mode()
-  ),
-  nav_item(
-    actionButton("quit_button", "Quitter", icon = icon("sign-out-alt"), class = "btn-danger")
   )
 )
 
+
 # SERVER --------------- 
+
 server <- function(input, output) {
   
   # Activation boutons quitter
@@ -153,3 +152,9 @@ server <- function(input, output) {
 # RUN APP --------------- 
 
 shinyApp(ui = ui, server = server)
+
+# Simulation de déploiement
+# rsconnect::deployApp()
+
+# Vérification journaux de déploiement
+# rsconnect::showLogs()

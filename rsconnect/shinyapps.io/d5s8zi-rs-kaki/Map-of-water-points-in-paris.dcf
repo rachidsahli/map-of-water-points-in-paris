@@ -1,0 +1,13 @@
+name: Map-of-water-points-in-paris
+title: Map-of-water-points-in-paris
+username: d5s8zi-rs-kaki
+account: d5s8zi-rs-kaki
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13740180
+bundleId: 9658456
+url: https://d5s8zi-rs-kaki.shinyapps.io/Map-of-water-points-in-paris/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Data/commerces-eau-de-paris.csv|Data/fontaines-a-boire.csv|Data/ilots-de-fraicheur-equipements-activites.csv|Data/ilots-de-fraicheur-espaces-verts-frais.csv|Programme/environnement.R|Programme/main.R|Programme/nettoyage.R
