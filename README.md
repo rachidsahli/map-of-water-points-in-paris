@@ -28,4 +28,5 @@ L'objectif principal est de fournir une visualisation géographique des points d
 
 ## Interface
 
-<img width="916" alt="Capture d’écran 2025-01-16 à 22.29.32" src="https://github.com/user-attachments/assets/3afb9a4c-021d-4fb9-8c26-8c1f236049c1">
+<img width="916" alt="Capture d’écran 2025-01-16 à 22.29.32" src="https://github.com/user-attachments/assets/59c96923-a5e3-460c-bc49-a7aed9f11897">
+
