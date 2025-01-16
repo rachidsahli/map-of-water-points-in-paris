@@ -13,7 +13,7 @@ L'objectif principal est de fournir une visualisation géographique des points d
 - **main.R** : Contient le code R qui charge les données, les traite, et génère la carte interactive (version script).
 - **app.R** : Contient le code pour l'application Shiny permettant de visualiser la carte de manière dynamique.
 - **water_data/** : Dossier contenant les données sur les points d'eau, telles que leur localisation géographique et leur type.
-- 
+
 ## Prérequis
 
 - **R** (version 4.0 ou plus récente recommandée)
