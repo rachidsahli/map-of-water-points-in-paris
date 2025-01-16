@@ -5,7 +5,7 @@ account: d5s8zi-rs-kaki
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13740180
-bundleId: 9658456
+bundleId: 9658522
 url: https://d5s8zi-rs-kaki.shinyapps.io/Map-of-water-points-in-paris/
 version: 1
 asMultiple: FALSE
