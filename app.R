@@ -17,7 +17,7 @@ eau <- read.csv("eau.csv")
 
 ui <- page_sidebar(
   
-  theme = bs_theme(bootswatch = "yeti"),
+  theme = bs_theme(bootswatch = "united"),
   title = "Fontaines de Paris",  
   id = "page",
   lang = "fr",
@@ -44,7 +44,10 @@ ui <- page_sidebar(
   div(
     style = "padding: 10px; text-align: center;",
     h2("Où boire de l'eau à Paris ?"),
-    h5("Paris regorge de fontaines publiques où vous pouvez vous désaltérer gratuitement. Cette carte interactive vous permet de localiser les fontaines et de découvrir où elles se trouvent dans la ville. Explorez les différents types de fontaines et leur accessibilité pour vous rafraîchir pendant vos promenades.")
+    p("Paris regorge de lieux pour se rafraîchir et se détendre.
+    Cette carte interactive vous guide vers des fontaines publiques, des commerces accueillants, 
+    des équipements accessibles, et des îlots de fraîcheur verdoyants. 
+    Explorez la ville autrement et découvrez ces espaces pour une pause bien méritée au cœur de la capitale.")
   ),
   
   # Carte

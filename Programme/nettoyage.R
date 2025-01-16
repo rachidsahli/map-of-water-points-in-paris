@@ -99,4 +99,4 @@ eau <- eau %>%
   )
 
 # Ecriture du fichier
-write.csv(eau,"Data/eau.csv")
+write.csv(eau,"eau.csv")
