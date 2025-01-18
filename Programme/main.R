@@ -1,4 +1,5 @@
-# Map
+# Map -----
+
 leaflet(eau) %>%
   addTiles() %>%
   addAwesomeMarkers(
@@ -42,4 +43,25 @@ leaflet(eau) %>%
   ) %>%
   addFullscreenControl() %>% 
   setView(lng = 2.333333, lat = 48.866667, zoom = 11)
+
+# Graph -----
+
+repartition_point_eau <- as.data.frame(table(eau$Nom_df))
+
+plot_ly(repartition_point_eau, 
+        x = ~Var1, 
+        y = ~Freq, 
+        type = 'bar', 
+        color = ~Var1, 
+        colors = c("purple", "lightblue", "orange", "lightgreen"),
+        text = ~paste("Effectifs: ", Freq),
+        hoverinfo = 'text') %>%
+  layout(
+    title = "Répartition des points d'eau gratuit à Paris",
+    xaxis = list(title = "Type de lieu"),
+    yaxis = list(title = "Effectifs"),
+    xaxis = list(tickmode = 'array', tickvals = c("Commerce", "Fontaines", "Equipements", "Ilots/espaces verts"),
+                 ticktext = c("Commerce", "Fontaine", "Bâtiments public", "Espace vert"))
+  )
+
 

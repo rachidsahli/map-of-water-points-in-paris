@@ -8,6 +8,7 @@ library(leaflet) # Carte
 library(leaflet.extras) # Carte
 library(rsconnect) # Déploiement de l'application
 library(tidyr) # Manipulation de données
+library(plotly) # Réalisation de graphiques
 
 # Import data ---------------
 
@@ -50,19 +51,46 @@ ui <- page_sidebar(
     Explorez la ville autrement et découvrez ces espaces pour une pause bien méritée au cœur de la capitale.")
   ),
   
-  # Carte
-  card(
+  navset_card_tab(
+    height = 400,
     full_screen = TRUE,
-    div(
-      style = "position: relative; height: 100%;",  
-      leafletOutput("carte", width = "100%", height = "100%")
+
+    nav_panel(
+      "Carte",
+      card(
+        div(
+          style = "position: relative; height: 100%;",  
+          leafletOutput("carte", width = "100%", height = "100%")
+        ),
+        card_footer(
+          popover(
+            a("En savoir plus"),
+            markdown("Cette carte a été réalisée à partir des données disponibles sur le site 
+      [data.gouv.fr](https://www.data.gouv.fr/fr/). 
+      Les points d'eau indiqués peuvent avoir évolué, notamment en ce qui concerne les îlots et équipements 
+      verts, dont certains ont été installés spécifiquement pour les Jeux Olympiques de 2024.")
+          )
+        )
+      )
     ),
-    card_footer(
-      popover(
-        a("En savoir plus"),
-        markdown("Cette carte a été réalisée à partir des données disponibles sur le site [data.gouv.fr](https://www.data.gouv.fr/fr/). 
-        Les points d'eau indiqués peuvent avoir évolué, notamment en ce qui concerne les îlots et équipements verts, dont certains ont été installés spécifiquement pour les Jeux Olympiques de 2024.
-")
+    
+    nav_panel(
+      "Statistiques",
+      card(
+        card_body(
+          min_height = 400,
+          plotlyOutput("plot_repartition")
+        ),
+        card_footer(
+          popover(
+            a("Description du graphique"),
+            markdown("Dans cette répartition des points d'eau à Paris, les fontaines occupent 
+                    une place prépondérante avec 1 327 unités, représentant la majorité. 
+                    Viennent ensuite les commerces partenaires, qui offrent également de l'eau gratuitement, 
+                    avec un total de 968 points d'eau. Les équipements publics comptent 495 points d'eau, 
+                    tandis que les espaces verts et îlots représentent 181 points d'eau.")
+          )
+        )
       )
     )
   )
@@ -149,6 +177,27 @@ server <- function(input, output) {
       ) %>%
       addFullscreenControl() %>% 
       setView(lng = 2.333333, lat = 48.866667, zoom = 11)
+  })
+  
+  # Graphique
+  repartition_point_eau <- as.data.frame(table(eau$Nom_df))
+  
+  output$plot_repartition <- renderPlotly({
+    plot_ly(repartition_point_eau, 
+            x = ~Var1, 
+            y = ~Freq, 
+            type = 'bar', 
+            color = ~Var1, 
+            colors = c("purple", "lightblue", "orange", "lightgreen"),
+            text = ~paste("Effectifs: ", Freq),
+            hoverinfo = 'text') %>%
+      layout(
+        title = "Répartition des points d'eau gratuit à Paris",
+        xaxis = list(title = "Type de lieu"),
+        yaxis = list(title = "Effectifs"),
+        xaxis = list(tickmode = 'array', tickvals = c("Commerce", "Fontaines", "Equipements", "Ilots/espaces verts"),
+                     ticktext = c("Commerce", "Fontaine", "Bâtiments public", "Espace vert"))
+      )
   })
 }
 
