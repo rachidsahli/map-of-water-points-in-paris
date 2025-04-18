@@ -10,11 +10,15 @@ L'objectif principal est de fournir une visualisation géographique des points d
 
 ## Structure du Projet
 
-- **Programme/environnement.R** : Contient le code R qui importe les packages et les données nécessaires au projet.
-- **Programme/nettoyage.R** : Contient le code R qui nettoie les données brut.
-- **Programme/main.R** : Contient le code R qui crée la carte interactive (script).
-- **app.R** : Contient le code pour l'application Shiny permettant de visualiser la carte de manière dynamique.
-- **eau.csv** : Jeu de données utilisés pour l'application.
+```
+map-of-water-points-in-paris/
+|- Programme/
+   |- environnement.R
+   |- nettoyage.R
+   |-main.R
+|- app.R
+|- eau.csv
+```
 
 ## Prérequis
 
