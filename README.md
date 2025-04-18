@@ -13,9 +13,9 @@ L'objectif principal est de fournir une visualisation géographique des points d
 ```
 map-of-water-points-in-paris/
 |- Programme/
-   |- environnement.R
-   |- nettoyage.R
-   |-main.R
+|   |- environnement.R
+|   |- nettoyage.R
+|   |-main.R
 |- app.R
 |- eau.csv
 ```
